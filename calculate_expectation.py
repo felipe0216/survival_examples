@@ -3,9 +3,10 @@ import numpy as np
 import pandas as pd
 from lifelines.datasets import load_leukemia
 
+
+data_ = load_leukemia()
 t_var = "t"
 y_var = "status"
-data_ = load_leukemia()
 penaliser=0.00
 l1_ratio=0.00
 
@@ -13,7 +14,7 @@ l1_ratio=0.00
 for mdls in [WeibullAFTFitter(fit_intercept =True,penalizer=penaliser,l1_ratio=l1_ratio),LogNormalAFTFitter(fit_intercept=True,penalizer=penaliser,l1_ratio=l1_ratio), LogLogisticAFTFitter(penalizer =penaliser),CoxPHFitter(penalizer=penaliser,l1_ratio=l1_ratio)]:#,GeneralizedGammaRegressionFitter(penalizer=penaliser,l1_ratio=l1_ratio)]:
     print(mdls)
 
-    data__ = data_#data_[data_["arrest"]==1]
+    data__ = data_#data_[data_[y_var]==1]
     timelimes = sorted(data__[t_var].unique())
     mdl = mdls
     mdl.fit(data__,t_var, y_var)#,timeline =timelimes)
